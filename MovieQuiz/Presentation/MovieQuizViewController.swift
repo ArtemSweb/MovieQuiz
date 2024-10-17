@@ -1,9 +1,15 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
+    
+    @IBOutlet private weak var labelText: UILabel!
+    
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        labelText.font = UIFont(name: "YSDisplay-Medium", size: 30)
     }
 }
 
