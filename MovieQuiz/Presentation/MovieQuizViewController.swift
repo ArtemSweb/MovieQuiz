@@ -1,29 +1,13 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-   
-    @IBOutlet weak var buttonYes: UIButton!
-    @IBOutlet weak var buttonNo: UIButton!
-    
-    private func makeButton(
-        button: UIButton,
-        color: UIColor,
-        radius: Int,
-        title: String) {
-            button.backgroundColor = color
-            button.layer.cornerRadius = CGFloat(radius)
-            button.setTitle(title, for: .normal)
-            button.layer.borderWidth = 3
-            button.layer.borderColor = UIColor.ypBlack.cgColor
-    }
-    
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeButton(button: buttonYes, color: .ypWhite, radius: 16, title: "Да")
-        makeButton(button: buttonNo, color: .ypWhite, radius: 16, title: "Нет")
+        
+        
     }
 }
 
