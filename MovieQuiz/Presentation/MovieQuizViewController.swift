@@ -1,7 +1,7 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-//MARK: - Структуры
+    //MARK: - Структуры
     private struct QuizQuestion {
         let image: String
         let text: String
@@ -20,36 +20,89 @@ final class MovieQuizViewController: UIViewController {
         let buttonText: String
     }
     
-//MARK: - элементы UI и мок-данные
+    //MARK: - элементы UI и мок-данные
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
-    @IBOutlet weak var yesButton: UIButton!
-    @IBOutlet weak var noButton: UIButton!
+    @IBOutlet private var questionTitleLable: UILabel!
+    @IBOutlet private var yesButton: UIButton!
+    @IBOutlet private var noButton: UIButton!
     
     private var currentQuestionIndex = 0
     private var correctAnswer = 0
     
     private let questions: [QuizQuestion] = [
-    QuizQuestion(image: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false)
-    ]
+    QuizQuestion(
+        image: "Deadpool",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "Kill Bill",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "Old",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: false
+    ),
+    QuizQuestion(
+        image: "Tesla",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: false
+    ),
+    QuizQuestion(
+        image: "The Avengers",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "The Dark Knight",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "The Godfather",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "The Green Knight",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: true
+    ),
+    QuizQuestion(
+        image: "The Ice Age Adventures of Buck Wild",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: false
+    ),
+    QuizQuestion(
+        image: "Vivarium",
+        text: "Рейтинг этого фильма больше чем 6?",
+        correctAnswer: false
+    )]
     
-// MARK: - Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //стили надписей
+        textLabel.font = UIFont(name: "YSDisplay-bold", size: 23)
+        counterLabel.font = UIFont(name: "YSDisplay-medium", size: 20)
+        questionTitleLable.font = UIFont(name: "YSDisplay-medium", size: 20)
+        
+        //стили картинок
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 8
+        
+        //стили кнопок
+        yesButton.titleLabel?.font = UIFont(name: "YSDisplay-medium", size: 20)
+        noButton.titleLabel?.font = UIFont(name: "YSDisplay-medium", size: 20)
+        
         show(quiz: convert(model: questions[0]))
     }
     
-//MARK: - обработка нажатия на кнопки
+    //MARK: - обработка нажатия на кнопки
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         let flag = false
         showAnswerResult(isCorrect: questions[currentQuestionIndex].correctAnswer == flag)
@@ -60,7 +113,7 @@ final class MovieQuizViewController: UIViewController {
         showAnswerResult(isCorrect: questions[currentQuestionIndex].correctAnswer == flag)
     }
     
-//MARK: - Вспомогательные функции
+    //MARK: - Вспомогательные функции
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -69,6 +122,7 @@ final class MovieQuizViewController: UIViewController {
         
         return quizStep
     }
+    
     //метод для отображения рамки в цветах корректности ответа
     private func showAnswerResult(isCorrect: Bool) {
         enableAndDisableButton(state: false)
@@ -76,8 +130,6 @@ final class MovieQuizViewController: UIViewController {
             correctAnswer += 1
         }
         
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -114,7 +166,7 @@ final class MovieQuizViewController: UIViewController {
         noButton.isEnabled = state
     }
 
-//MARK: - Алерты
+    //MARK: - Алерты
     private func showAction(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
             title: result.title,

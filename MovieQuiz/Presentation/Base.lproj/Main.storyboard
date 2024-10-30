@@ -9,11 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="YS Display-Bold.ttf">
-            <string>YSDisplay-Bold</string>
-        </array>
-        <array key="YS Display-Medium.ttf">
-            <string>YSDisplay-Medium</string>
+        <array key="TimesNewRoman.ttf">
+            <string>.SFUI-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -29,24 +26,24 @@
                                 <rect key="frame" x="20" y="58" width="374" height="804"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7F-u1-CoR">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вопрос:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDQ-ng-um9" userLabel="Question Title Lable">
-                                                <rect key="frame" x="0.0" y="0.0" width="333.5" height="23.5"/>
-                                                <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вопрос:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDQ-ng-um9" userLabel="Question Title Lable">
+                                                <rect key="frame" x="0.0" y="0.0" width="343.5" height="24"/>
+                                                <fontDescription key="fontDescription" name="AcademyEngravedLetPlain" family="Academy Engraved LET" pointSize="20"/>
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="0/10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lPG-3d-Ik6" userLabel="Index Label">
-                                                <rect key="frame" x="333.5" y="0.0" width="40.5" height="23.5"/>
-                                                <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="0/10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lPG-3d-Ik6" userLabel="Index Label">
+                                                <rect key="frame" x="343.5" y="0.0" width="30.5" height="24"/>
+                                                <fontDescription key="fontDescription" name=".SFUI-Regular" family=".AppleSystemUIFont" pointSize="17"/>
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ky0-7A-jXR" userLabel="Preview Image">
-                                        <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
+                                        <rect key="frame" x="0.0" y="44" width="374" height="561"/>
                                         <color key="backgroundColor" name="YP White"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Ky0-7A-jXR" secondAttribute="height" multiplier="2:3" id="1Mq-k2-0gW"/>
@@ -57,9 +54,9 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма больше чем 0?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9w-Av-mWG" userLabel="Question Label">
-                                        <rect key="frame" x="0.0" y="624.5" width="374" height="99.5"/>
-                                        <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма больше чем 0?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9w-Av-mWG" userLabel="Question Label">
+                                        <rect key="frame" x="0.0" y="625" width="374" height="99"/>
+                                        <fontDescription key="fontDescription" name="AlNile" family="Al Nile" pointSize="23"/>
                                         <color key="textColor" name="YP White"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -72,7 +69,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="BGJ-xJ-6I9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name=".SFUI-Regular" family=".AppleSystemUIFont" pointSize="20"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Нет">
                                                     <color key="titleColor" name="YP black"/>
@@ -89,7 +86,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYX-WY-nJY" userLabel="Yes button">
                                                 <rect key="frame" x="197" y="0.0" width="177" height="60"/>
                                                 <color key="backgroundColor" name="YP White"/>
-                                                <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Да">
                                                     <color key="titleColor" name="YP black"/>
@@ -124,6 +121,7 @@
                         <outlet property="counterLabel" destination="lPG-3d-Ik6" id="HH8-UV-XU1"/>
                         <outlet property="imageView" destination="Ky0-7A-jXR" id="d42-QX-5WF"/>
                         <outlet property="noButton" destination="79y-bY-kpp" id="0zH-y7-qjT"/>
+                        <outlet property="questionTitleLable" destination="WDQ-ng-um9" id="95L-3M-p25"/>
                         <outlet property="textLabel" destination="E9w-Av-mWG" id="BKz-BD-azD"/>
                         <outlet property="yesButton" destination="ZYX-WY-nJY" id="It9-em-MvC"/>
                     </connections>
