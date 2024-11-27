@@ -9,6 +9,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private var questionTitleLable: UILabel!
     @IBOutlet private var yesButton: UIButton!
     @IBOutlet private var noButton: UIButton!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol = QuestionFactory()
@@ -135,6 +136,36 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func enableAndDisableButton(state: Bool) {
         yesButton.isEnabled = state
         noButton.isEnabled = state
+    }
+    
+    //лоадер
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
+    //обработка ошибки загрузки
+    private func showNetworkError(message: String) {
+        hideLoadingIndicator()
+        
+        let errorModel = AlertModel(
+            title: "Ошибка",
+            message: message,
+            buttonText: "Повторить загрузку",
+            completion: { [weak self] in
+                guard let self = self else { return }
+                
+                self.currentQuestionIndex = 0
+                self.correctAnswer = 0
+                self.questionFactory.requestNextQuestion()
+            })
+        
+        alertPresenter?.showAlert(model: errorModel)
     }
     
     //MARK: - обработка нажатия на кнопки
