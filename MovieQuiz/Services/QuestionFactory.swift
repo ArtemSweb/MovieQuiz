@@ -64,7 +64,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
     
     func loadData(){
         moviesLoader.loadMovies{ [weak self] result in
-            print(result)
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 
@@ -95,8 +94,8 @@ final class QuestionFactory: QuestionFactoryProtocol {
             }
             
             let rating = Float(movie.rating) ?? 0
-            let text = "Рейтинг этого фильма больше чем 8.3?"
-            let correctAnswer = rating > 8.3
+            let text = "Рейтинг этого фильма больше чем 8.2?"
+            let correctAnswer = rating > 8.2
             let question = QuizQuestion(image: imageData,
                                          text: text,
                                          correctAnswer: correctAnswer)
