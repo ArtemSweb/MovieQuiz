@@ -144,8 +144,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     private func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
     }
     
     //обработка ошибки загрузки
@@ -155,14 +155,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         let errorModel = AlertModel(
             title: "Ошибка",
             message: message,
-            buttonText: "Повторить загрузку",
-            completion: { [weak self] in
+            buttonText: "Повторить загрузку") { [weak self] in
                 guard let self = self else { return }
                 
                 self.currentQuestionIndex = 0
                 self.correctAnswer = 0
                 self.questionFactory?.requestNextQuestion()
-            })
+            }
         
         alertPresenter?.showAlert(model: errorModel)
     }
