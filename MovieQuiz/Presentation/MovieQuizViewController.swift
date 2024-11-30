@@ -40,7 +40,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         //получение вопроса из фабрики
         let questionFactory = QuestionFactory(delegate: self, moviesLoader: MoviesLoader())
         self.questionFactory = questionFactory
-//        questionFactory.requestNextQuestion()
         
         showLoadingIndicator()
         questionFactory.loadData()
@@ -63,7 +62,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         let viewModel = convert(model: question)
         
         DispatchQueue.main.async { [weak self] in 
-            self?.show(quiz: viewModel)
+            guard let self else { return }
+            self.show(quiz: viewModel)
         }
     }
     
@@ -130,7 +130,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 message: text,
                 buttonText: "Cыграть еще раз",
                 completion: { [weak self] in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     
                     self.currentQuestionIndex = 0
                     self.correctAnswer = 0
@@ -168,7 +168,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             title: "Ошибка",
             message: message,
             buttonText: "Повторить загрузку") { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 self.currentQuestionIndex = 0
                 self.correctAnswer = 0
