@@ -38,9 +38,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         noButton.titleLabel?.font = UIFont(name: "YSDisplay-medium", size: 20)
         
         //получение вопроса из фабрики
-        let questionFactory = QuestionFactory(delegate: self)
+        let questionFactory = QuestionFactory(delegate: self, moviesLoader: MoviesLoader())
         self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion()
+//        questionFactory.requestNextQuestion()
+        
+        showLoadingIndicator()
+        questionFactory.loadData()
         
         //статистика по играм
         statisticService = StatisticService()
@@ -76,7 +79,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     //MARK: - Вспомогательные функции
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
+            image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
         
