@@ -64,6 +64,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
     }
     
+    func didLoadDataFromServer() {
+        activityIndicator.isHidden = true
+        questionFactory?.requestNextQuestion()
+    }
+    
+    func didFailToLoadData(with error: any Error) {
+        showNetworkError(message: error.localizedDescription)
+    }
+    
     //MARK: - Вспомогательные функции
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
