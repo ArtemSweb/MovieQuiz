@@ -69,8 +69,13 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 
                 switch result {
                 case .success(let mostPopularMovies):
-                    self.movies = mostPopularMovies.items //сохранили фильм в массив
-                    self.delegate?.didLoadDataFromServer() //сообщили делегатору о готовности
+                    if mostPopularMovies.items.count == 0 {
+                        self.delegate?.didFailToLoadDataFromClientError(with: mostPopularMovies.errorMessage)
+                    } else {
+                        self.movies = mostPopularMovies.items //сохранили фильм в массив
+                        self.delegate?.didLoadDataFromServer() //сообщили делегатору о готовности
+                    }
+                    
                 case .failure(let error):
                     self.delegate?.didFailToLoadData(with: error)
                 }

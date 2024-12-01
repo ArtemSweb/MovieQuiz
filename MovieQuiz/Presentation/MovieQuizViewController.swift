@@ -76,8 +76,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionFactory?.requestNextQuestion()
     }
     
-    func didFailToLoadData(with error: any Error) {
+    func didFailToLoadData(with error: Error) {
         showNetworkError(message: error.localizedDescription)
+    }
+    
+    func didFailToLoadDataFromClientError(with error: String) {
+        showNetworkError(message: error)
     }
     
     //MARK: - Вспомогательные функции
@@ -174,9 +178,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             buttonText: "Повторить загрузку") { [weak self] in
                 guard let self else { return }
                 
-                self.currentQuestionIndex = 0
-                self.correctAnswer = 0
-                self.questionFactory?.requestNextQuestion()
+                //перезапрашиваем данные из сети
+                self.questionFactory?.loadData()
+                showLoadingIndicator()
             }
         
         alertPresenter?.showAlert(model: errorModel)
