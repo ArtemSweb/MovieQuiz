@@ -84,6 +84,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         showNetworkError(message: error)
     }
     
+    func didFailToLoadImage(with error: String) {
+        showNetworkError(message: error)
+    }
+    
     //MARK: - Вспомогательные функции
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
