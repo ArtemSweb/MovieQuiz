@@ -57,7 +57,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     //MARK: - QuestionFactoryDelegate
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        activityIndicator.stopAnimating()
+        hideLoadingIndicator()
         guard let question = question else {
             return
         }
@@ -72,7 +72,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     func didLoadDataFromServer() {
-        activityIndicator.stopAnimating()
+        hideLoadingIndicator()
         questionFactory?.requestNextQuestion()
     }
     
@@ -116,7 +116,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNextQuestionOrResults() {
         enableAndDisableButton(state: true)
         if currentQuestionIndex == questionsAmount - 1 {
-            activityIndicator.stopAnimating()
+            hideLoadingIndicator()
             guard let statisticService else { return }
             
             let now = Date()
@@ -143,7 +143,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 })
             alertPresenter?.showAlert(model: viewModel)
         } else {
-            activityIndicator.startAnimating() //запускаем лоадер при успешной загрузке нового фильма
+            showLoadingIndicator()  //запускаем лоадер при успешной загрузке нового фильма
             currentQuestionIndex += 1
             self.questionFactory?.requestNextQuestion()
         }
