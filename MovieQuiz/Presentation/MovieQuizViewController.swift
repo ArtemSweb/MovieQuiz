@@ -37,6 +37,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         yesButton.titleLabel?.font = UIFont(name: "YSDisplay-medium", size: 20)
         noButton.titleLabel?.font = UIFont(name: "YSDisplay-medium", size: 20)
         
+        //работа лоадера
+        activityIndicator.hidesWhenStopped = true
+        
         //получение вопроса из фабрики
         let questionFactory = QuestionFactory(delegate: self, moviesLoader: MoviesLoader())
         self.questionFactory = questionFactory
@@ -54,6 +57,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     //MARK: - QuestionFactoryDelegate
     func didReceiveNextQuestion(question: QuizQuestion?) {
+        activityIndicator.stopAnimating()
         guard let question = question else {
             return
         }
@@ -68,7 +72,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     func didLoadDataFromServer() {
-        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
         questionFactory?.requestNextQuestion()
     }
     
@@ -112,6 +116,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNextQuestionOrResults() {
         enableAndDisableButton(state: true)
         if currentQuestionIndex == questionsAmount - 1 {
+            activityIndicator.stopAnimating()
             guard let statisticService else { return }
             
             let now = Date()
@@ -138,6 +143,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 })
             alertPresenter?.showAlert(model: viewModel)
         } else {
+            activityIndicator.startAnimating() //запускаем лоадер при успешной загрузке нового фильма
             currentQuestionIndex += 1
             self.questionFactory?.requestNextQuestion()
         }
@@ -151,13 +157,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     //лоадер
     private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     
     private func hideLoadingIndicator() {
         activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
     }
     
     //обработка ошибки загрузки
