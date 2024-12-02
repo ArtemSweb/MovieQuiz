@@ -55,6 +55,7 @@ final class MovieQuizUITests: XCTestCase {
     func testIndexQuestionLable() {
         let indexLabel = app.staticTexts["Index"]
         
+        sleep(2)
         app.buttons["Yes"].tap()
         sleep(2)
         app.buttons["Yes"].tap()
