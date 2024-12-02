@@ -31,7 +31,7 @@ struct ArithmeticOperations {
 }
 
 
-class MovieQuizTests: XCTestCase {
+final class MovieQuizTests: XCTestCase {
     func testAddition() throws {
         let arithmeticOperations = ArithmeticOperations()
         let expectation = expectation(description: "Addition function expectation")
