@@ -103,7 +103,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
             
             let rating = Float(movie.rating) ?? 0
             var questionRating = Float.random(in: rating - 0.4...rating + 0.4)
-            questionRating = round(questionRating * 10) / 10.0
+            questionRating = round(questionRating * 10) / 10.0                      //округление до десятых
             let text = "Рейтинг этого фильма больше чем \(questionRating)?"
             let correctAnswer = rating > questionRating
             let question = QuizQuestion(image: imageData,
