@@ -52,7 +52,7 @@ struct StubNetworkClient: NetworkRouting {
     }
 }
 
-class MoviesLoaderTests: XCTestCase {
+final class MoviesLoaderTests: XCTestCase {
     
     func testSuccessLoading() throws {
         //given
@@ -66,6 +66,7 @@ class MoviesLoaderTests: XCTestCase {
         loader.loadMovies { result in
             switch result {
             case .success(let movies):
+                XCTAssertEqual(movies.items.count, 2)
                 expectation.fulfill()
             case .failure(_):
                 XCTFail("Unexpected failure")
