@@ -4,6 +4,15 @@ import XCTest
 final class MovieQuizUITests: XCTestCase {
     
     var app: XCUIApplication!
+    
+    //MARK: - вспомогательные функции
+    
+    private func tapOnButton(count: Int, delay: UInt32, buttonId: String) {
+        for _ in 1...count {
+            app.buttons[buttonId].tap()
+            sleep(delay)
+        }
+    }
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -20,7 +29,8 @@ final class MovieQuizUITests: XCTestCase {
         app.terminate()
         app = nil
     }
-
+    
+    //MARK: - Тесты
     //тест что кнопка "Да" перелистывает вопрос
     func testYesButton() {
         sleep(4)
@@ -56,12 +66,7 @@ final class MovieQuizUITests: XCTestCase {
         let indexLabel = app.staticTexts["Index"]
         
         sleep(2)
-        app.buttons["Yes"].tap()
-        sleep(2)
-        app.buttons["Yes"].tap()
-        sleep(2)
-        app.buttons["Yes"].tap()
-        sleep(2)
+        tapOnButton(count: 3, delay: 2, buttonId: "Yes")
         
         XCTAssertEqual(indexLabel.label, "4/10")
     }
@@ -72,12 +77,8 @@ final class MovieQuizUITests: XCTestCase {
         sleep(2)
         
         //10 раз жмем кнопку "Да"
-        for _ in 1...10 {
-            app.buttons["Yes"].tap()
-            sleep(3)
-        }
-        
-        sleep(2)
+        tapOnButton(count: 10, delay: 4, buttonId: "No")
+
         //ловим алерт
         let alert = app.alerts["Game result"]
         
@@ -88,7 +89,9 @@ final class MovieQuizUITests: XCTestCase {
     }
     
     func testDismissAlert() {
-        testShowAlert()
+        //ждем загрузку первого вопроса
+        sleep(2)
+        tapOnButton(count: 10, delay: 3, buttonId: "No")
         
         //ловим алерт
         let alert = app.alerts["Game result"]
