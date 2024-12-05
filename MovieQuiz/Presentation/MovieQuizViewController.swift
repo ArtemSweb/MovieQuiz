@@ -11,14 +11,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private var noButton: UIButton!
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     
-    private let questionsAmount: Int = 10
+    private let presenter = MovieQuizPresenter()
+    
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     
     private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticServiceProtocol?
     
-    private var currentQuestionIndex = 0
     private var correctAnswer = 0
     
     // MARK: - Lifecycle
@@ -63,7 +63,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
         
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         
         DispatchQueue.main.async { [weak self] in 
             guard let self else { return }
@@ -89,14 +89,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     //MARK: - Вспомогательные функции
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        let quizStep = QuizStepViewModel(
-            image: UIImage(data: model.image) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-        
-        return quizStep
-    }
     
     //метод для отображения рамки в цветах корректности ответа
     private func showAnswerResult(isCorrect: Bool) {
@@ -123,19 +115,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func showNextQuestionOrResults() {
         enableAndDisableButton(state: true)
-        if currentQuestionIndex == questionsAmount - 1 {
+        if presenter.isLastQuestin() {
             hideLoadingIndicator()
             guard let statisticService else { return }
             
             let now = Date()
-            let resGame = GameResult(correct: correctAnswer, total: questionsAmount, date: now)
+            let resGame = GameResult(correct: correctAnswer, total: presenter.questionsAmount, date: now)
             statisticService.store(resGame)
             
             let text = 
             """
-                Ваш результат: \(correctAnswer)/\(questionsAmount)
+                Ваш результат: \(correctAnswer)/\(presenter.questionsAmount)
                 Количество сыгранных квизов: \(statisticService.gamesCount)
-                Рекорд: \(statisticService.bestGame.correct)/\(questionsAmount) (\(statisticService.bestGame.date.dateTimeString))
+                Рекорд: \(statisticService.bestGame.correct)/\(presenter.questionsAmount) (\(statisticService.bestGame.date.dateTimeString))
                 Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
             """
             let viewModel = AlertModel(
@@ -145,14 +137,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 completion: { [weak self] in
                     guard let self else { return }
                     
-                    self.currentQuestionIndex = 0
+                    self.presenter.resetQuestionIndex()
                     self.correctAnswer = 0
                     self.questionFactory?.requestNextQuestion()
                 })
             alertPresenter?.showAlert(model: viewModel)
         } else {
             showLoadingIndicator()  //запускаем лоадер при успешной загрузке нового фильма
-            currentQuestionIndex += 1
+            presenter.switchToNextQuestion()
             self.questionFactory?.requestNextQuestion()
         }
     }
