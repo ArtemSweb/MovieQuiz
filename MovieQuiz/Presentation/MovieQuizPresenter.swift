@@ -40,6 +40,21 @@ final class MovieQuizPresenter {
         return quizStep
     }
     
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        viewController?.hideLoadingIndicator()
+        guard let question = question else {
+            return
+        }
+        
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.viewController?.show(quiz: viewModel)
+        }
+    }
+    
     //MARK: - Обработка нажатия кнопок
     func yesButtonClicked() {
         didAnswer(isYes: true)
