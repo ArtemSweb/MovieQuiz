@@ -11,7 +11,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private var noButton: UIButton!
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     
-    private let presenter = MovieQuizPresenter()
+    private var presenter = MovieQuizPresenter()
     
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
@@ -46,6 +46,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         showLoadingIndicator()
         questionFactory.loadData()
+        
+        //реализация MVP
+        presenter.viewController = self
         
         //статистика по играм
         statisticService = StatisticService()
@@ -91,7 +94,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     //MARK: - Вспомогательные функции
     
     //метод для отображения рамки в цветах корректности ответа
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         enableAndDisableButton(state: false)
         if isCorrect {
             correctAnswer += 1
@@ -184,18 +187,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     //MARK: - обработка нажатия на кнопки
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let flag = false
-        showAnswerResult(isCorrect: currentQuestion.correctAnswer == flag)
+        presenter.currentQuestion = currentQuestion
+        presenter.noButtonClicked()
     }
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let flag = true
-        showAnswerResult(isCorrect: currentQuestion.correctAnswer == flag)
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
 }
