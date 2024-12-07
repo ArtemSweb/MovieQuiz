@@ -7,11 +7,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private var currentQuestion: QuizQuestion?
     var questionFactory: QuestionFactoryProtocol?
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var statisticService: StatisticServiceProtocol?
 
     
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
         //фабрика вопросов
@@ -72,7 +72,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     //MARK: - Модель квиза
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+    func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
@@ -102,7 +102,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             self.upCorrectAnswerCounter()
         }
         
-        viewController?.highlightImageBorder(isCorrectAswer: isCorrect)
+        viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }

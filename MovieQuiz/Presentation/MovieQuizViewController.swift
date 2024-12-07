@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     
     //MARK: - элементы UI и мок-данные
     @IBOutlet private var imageView: UIImageView!
@@ -46,8 +46,8 @@ final class MovieQuizViewController: UIViewController {
     
     //MARK: - Вспомогательные функции
     
-    func highlightImageBorder(isCorrectAswer: Bool) {
-        imageView.layer.borderColor = isCorrectAswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+    func highlightImageBorder(isCorrectAnswer: Bool) {
+        imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
     //отображение вопроса
