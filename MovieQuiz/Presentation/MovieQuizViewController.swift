@@ -12,10 +12,7 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
     
     private var presenter: MovieQuizPresenter!
-    
     private var alertPresenter: AlertPresenter?
-    
-    private var correctAnswer = 0
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -49,19 +46,8 @@ final class MovieQuizViewController: UIViewController {
     
     //MARK: - Вспомогательные функции
     
-    //метод для отображения рамки в цветах корректности ответа
-    func showAnswerResult(isCorrect: Bool) {
-        enableAndDisableButton(state: false)
-        if isCorrect {
-            presenter.upCorrectAnswerCounter()
-        }
-        
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            presenter.showNextQuestionOrResults()
-        }
+    func highlightImageBorder(isCorrectAswer: Bool) {
+        imageView.layer.borderColor = isCorrectAswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
     //отображение вопроса

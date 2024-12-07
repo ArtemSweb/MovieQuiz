@@ -1,13 +1,13 @@
 import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
-    let questionsAmount: Int = 10
+    private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswer = 0
     
-    var currentQuestion: QuizQuestion?
+    private var currentQuestion: QuizQuestion?
     var questionFactory: QuestionFactoryProtocol?
-    weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewController?
     private var statisticService: StatisticServiceProtocol?
 
     
@@ -30,11 +30,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
         let flag = isYes
         
-        viewController?.showAnswerResult(isCorrect: currentQuestion.correctAnswer == flag)
+        self.proceedWithAnswer(isCorrect: currentQuestion.correctAnswer == flag)
     }
     
     func resetQuizParametr() {
-        self.resetQuestionIndex()
+        currentQuestionIndex = 0
         correctAnswer = 0
         questionFactory?.requestNextQuestion()
     }
@@ -58,8 +58,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.showNetworkError(message: error)
     }
     
-    //MARK: - конвертация в модель квиза
-    
+    //MARK: - методы работы с параметрами
     func upCorrectAnswerCounter() {
         correctAnswer += 1
     }
@@ -68,15 +67,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex == questionsAmount - 1
     }
     
-    func resetQuestionIndex() {
-        currentQuestionIndex = 0
-    }
-    
     func switchToNextQuestion() {
         currentQuestionIndex += 1
     }
     
-    func convert(model: QuizQuestion) -> QuizStepViewModel {
+    //MARK: - Модель квиза
+    private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let quizStep = QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
@@ -99,8 +95,23 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             self.viewController?.show(quiz: viewModel)
         }
     }
+    
+    private func proceedWithAnswer(isCorrect: Bool) {
+        viewController?.enableAndDisableButton(state: false)
+        if isCorrect {
+            self.upCorrectAnswerCounter()
+        }
+        
+        viewController?.highlightImageBorder(isCorrectAswer: isCorrect)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            self.proceedToNextQuestionOrResults()
+        }
+    }
+    
     //MARK: - Отображение вопроса или алерта
-    func showNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         viewController?.enableAndDisableButton(state: true)
         if self.isLastQuestin() {
             viewController?.hideLoadingIndicator()
