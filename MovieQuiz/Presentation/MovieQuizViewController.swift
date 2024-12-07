@@ -127,10 +127,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 buttonText: "Cыграть еще раз",
                 completion: { [weak self] in
                     guard let self else { return }
-                    
-                    self.presenter.resetQuestionIndex()
-                    self.correctAnswer = 0
-                    self.questionFactory?.requestNextQuestion()
+                    self.resetQuizParametr()
                 })
             alertPresenter?.showAlert(model: viewModel)
         } else {
@@ -138,6 +135,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             presenter.switchToNextQuestion()
             self.questionFactory?.requestNextQuestion()
         }
+    }
+    
+    //Сброс счетчиков квиза и старт новой игры
+    private func resetQuizParametr() {
+        presenter.resetQuestionIndex()
+        correctAnswer = 0
+        questionFactory?.requestNextQuestion()
     }
     
     //блокировка-разблокировка кнопок после вопроса
