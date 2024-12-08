@@ -20,8 +20,8 @@ final class QuestionFactory: QuestionFactoryProtocol {
                     if mostPopularMovies.items.count == 0 {
                         self.delegate?.didFailToLoadDataFromClientError(with: mostPopularMovies.errorMessage)
                     } else {
-                        self.movies = mostPopularMovies.items //сохранили фильм в массив
-                        self.delegate?.didLoadDataFromServer() //сообщили делегатору о готовности
+                        self.movies = mostPopularMovies.items
+                        self.delegate?.didLoadDataFromServer()
                     }
                     
                 case .failure(let error):

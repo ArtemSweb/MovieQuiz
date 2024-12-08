@@ -43,7 +43,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     //MARK: - Вспомогательные функции
-    
     func highlightImageBorder(isCorrectAnswer: Bool) {
         imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
@@ -71,6 +70,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         activityIndicator.stopAnimating()
     }
     
+    //MARK: - отображение Alert
     //обработка ошибки загрузки
     func showNetworkError(message: String) {
         hideLoadingIndicator()
