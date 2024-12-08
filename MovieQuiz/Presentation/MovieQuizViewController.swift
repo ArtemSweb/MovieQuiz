@@ -37,8 +37,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         //реализация MVP
         presenter = MovieQuizPresenter(viewController: self)
         
-        //статистика по играм
-        
         //алерт
         alertPresenter = AlertPresenter()
         alertPresenter?.setup(delegate: self)
@@ -82,10 +80,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
             message: message,
             buttonText: "Повторить загрузку") { [weak self] in
                 guard let self else { return }
-                
-                //перезапрашиваем данные из сети
-                presenter.questionFactory?.loadData()
-                showLoadingIndicator()
+                presenter.resetQuizParametr()
             }
         
         alertPresenter?.showAlert(model: errorModel)

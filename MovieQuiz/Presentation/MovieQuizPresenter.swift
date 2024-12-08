@@ -6,7 +6,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private var correctAnswer = 0
     
     private var currentQuestion: QuizQuestion?
-    var questionFactory: QuestionFactoryProtocol?
+    private var questionFactory: QuestionFactoryProtocol?
     private weak var viewController: MovieQuizViewControllerProtocol?
     private var statisticService: StatisticServiceProtocol?
 
@@ -37,6 +37,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex = 0
         correctAnswer = 0
         questionFactory?.requestNextQuestion()
+        viewController?.showLoadingIndicator()
     }
     
     
