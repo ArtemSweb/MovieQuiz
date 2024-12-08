@@ -52,7 +52,7 @@ final class StatisticService: StatisticServiceProtocol {
         storage.set(updatedCorrectAnswers, forKey: Keys.correctAnswers.rawValue)
         storage.set(updatedTotalQuestions, forKey: Keys.totalQuestions.rawValue)
         
-        // чекаем и аплдейтим лучший результат, если текущий результат лучше
+        // обновляем лучший результат, если текущий результат такой же или лучше
         let currentGame = GameResult(correct: gameResult.correct, total: gameResult.total, date: Date())
         if currentGame.isBetterThan(bestGame) {
             bestGame = currentGame
